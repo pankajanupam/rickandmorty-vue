@@ -9,7 +9,7 @@
       </template>
       <template v-else-if="characters.info && characters.info.next">
         <a href="#" @click.prevent="page=characters.info.next">Load More</a>
-        <pagination></pagination>
+        <!-- <pagination></pagination> -->
       </template>
     </div>
   </div>
@@ -19,7 +19,7 @@
 
 // @ is an alias to /src
 import CharacterCard from '@/components/CharacterCard.vue'
-import Pagination from '@/components/Pagination.vue'
+// import Pagination from '@/components/Pagination.vue'
 import { characters } from './Query.js'
 
 export default {
@@ -39,8 +39,8 @@ export default {
     skipQuery: false
   }),
   components: {
-    CharacterCard,
-    Pagination
+    CharacterCard
+    // Pagination
   },
   watch: {
     filter: function (newVal, oldVal) {
