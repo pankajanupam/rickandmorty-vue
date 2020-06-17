@@ -50,7 +50,7 @@ export default {
         this.preFetch.results.every((character) => {
           Object.keys(newVal).every((filterKey) => {
             return (typeof newVal[filterKey] === 'string' && character[filterKey].toLowerCase().indexOf(newVal[filterKey].toLowerCase()) > -1) ||
-                    (newVal[filterKey].length === 0 || newVal[filterKey].indexOf(character[filterKey]) > -1)
+                    (newVal[filterKey].length === 0 || newVal[filterKey].indexOf(character[filterKey].name || character[filterKey]) > -1)
           }) && characters.push(character)
 
           return characters.length < 20
