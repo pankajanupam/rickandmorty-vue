@@ -12,7 +12,7 @@
               <top-panel :appliedfilters="filter" :callbackfn="getSearchTerm"></top-panel>
             </div>
             <div class="cell small-12">
-              <characters-list :filter="filter"></characters-list>
+              <characters-list :filter="filter" @preFetchRead="switchSearchMode" :enablePreFetch="false"></characters-list>
             </div>
           </div>
         </div>
@@ -27,7 +27,7 @@
 // @ is an alias to /src
 import FilterPanel from '@/components/FilterPanel.vue'
 import TopPanel from '@/components/TopPanel.vue'
-import CharactersList from '@/components/CharactersList.vue'
+import CharactersList from '@/components/charactersList/CharactersList.vue'
 
 export default {
   name: 'Home',
@@ -54,11 +54,13 @@ export default {
   methods: {
     getSearchTerm (data) {
       this.filter = { ...this.filter, ...{ name: data } }
-      // delete this.pageFilters.gender
-      // this.pageFilters = { ...this.pageFilters }
     },
     getSelectedFilter (data) {
       this.filter = { ...this.filter, ...data } // data
+    },
+    switchSearchMode () {
+      this.pageFilters.status.type = 'checkbox'
+      this.pageFilters.gender.type = 'checkbox'
     }
   }
   // apollo: {

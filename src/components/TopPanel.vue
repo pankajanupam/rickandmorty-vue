@@ -42,7 +42,7 @@ export default {
       this.callbackfn(searchTerm)
     },
     refreshData (data) {
-      delete this.appliedfilters[data.key]
+      this.appliedfilters[data.key].splice(this.appliedfilters[data.key].indexOf(data.value), 1)
       this.callbackfn(this.searchTerm) // taking advantage of object refrence
     }
   }

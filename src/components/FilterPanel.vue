@@ -4,7 +4,7 @@
       v-for="(filter, key) in filters"
       :checkboxes="filter.data"
       :filterTitle="key"
-      :callbackfn="changeHandler"
+      :callbackfn="checkboxChangeHandler"
       :type="filter.type"
       :key="key"
       :checked="selectedFilters[key]"
@@ -33,8 +33,15 @@ export default {
     CheckBoxGroup
   },
   methods: {
-    changeHandler (event) {
-      this.selectedFilters[event.target.name] = event.target.value
+    checkboxChangeHandler (event) {
+      const { target: { name, value, type, checked } } = event
+      this.selectedFilters[name] || (this.selectedFilters[name] = [])
+      type === 'radio'
+        ? this.selectedFilters[name] = [value]
+        : checked
+          ? this.selectedFilters[name].push(value)
+          : this.selectedFilters[name].splice(this.selectedFilters[name].indexOf(value), 1)
+
       this.callbackfn(this.selectedFilters)
     }
   }

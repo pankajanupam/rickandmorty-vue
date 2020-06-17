@@ -17,22 +17,27 @@
 
 <script>
 
-import gql from 'graphql-tag'
-
 // @ is an alias to /src
 import CharacterCard from '@/components/CharacterCard.vue'
 import Pagination from '@/components/Pagination.vue'
+import { characters } from './Query.js'
 
 export default {
   props: {
     filter: {
       type: Object,
       default: () => ({})
-    }
+    },
+    enablePreFetch: Boolean
   },
-  data () {
-    return { characters: {}, page: 1, loading: 0, skipQuery: false }
-  },
+  data: () => ({
+    page: 1,
+    loading: 0,
+    characters: {},
+    preFetch: {},
+    preFetchPage: 1,
+    skipQuery: false
+  }),
   components: {
     CharacterCard,
     Pagination
@@ -40,44 +45,27 @@ export default {
   watch: {
     filter: function (newVal, oldVal) {
       this.page = 1
+      const characters = []
+      this.preFetch.results.every((character) => {
+        Object.keys(newVal).every((filterKey) => {
+          return (typeof newVal[filterKey] === 'string' && character[filterKey].toLowerCase().indexOf(newVal[filterKey].toLowerCase()) > -1) ||
+                  (newVal[filterKey].length === 0 || newVal[filterKey].indexOf(character[filterKey]) > -1)
+        }) && characters.push(character)
+
+        return characters.length < 20
+      })
+      this.characters.results = characters
+      console.log(characters)
+    },
+    skipQuery: function (newVal, oldVal) {
+      console.log(newVal, oldVal)
+      newVal && this.$emit('preFetchRead')
     }
   },
-  methods: {
-    /**
-     * Callback for the onscroll event checks whether the scroll position
-     * is near the bottom of the scroll container.
-     */
-    handleScroll ({ target: { scrollTop, clientHeight, scrollHeight } }) {
-      if (scrollTop + clientHeight >= scrollHeight) this.loadBatch()
-    }
-  },
+  methods: {},
   apollo: {
     characters: {
-      query: gql` query ( $filter: FilterCharacter, $page: Int ) {
-        characters(page: $page, filter: $filter ) {
-          info {
-              count,
-              pages,
-              next,
-              prev
-          }
-          results { 
-            name
-            image
-            status
-            species
-            gender
-            origin {
-              id
-              name
-            }
-            location {
-              id
-              name
-            }
-          }
-        }
-      }`,
+      query: characters,
       loadingKey: 'loading',
       variables () {
         return {
@@ -86,11 +74,29 @@ export default {
         }
       },
       update (data) {
-        // data.characters.info.next ? (this.page = data.characters.info.next) : (this.skipQuery = true)
         this.characters.results &&
         data.characters.info.pages !== 1 &&
         data.characters.info.next !== 2 &&
           (data.characters.results = [...this.characters.results, ...data.characters.results])
+        return data.characters
+      },
+      skip () { // used to skip query
+        return this.skipQuery
+      }
+    },
+    preFetch: {
+      query: characters,
+      variables () {
+        return {
+          page: this.preFetchPage
+        }
+      },
+      update (data) {
+        data.characters.info.next < 3 ? (this.preFetchPage = data.characters.info.next) : (this.skipQuery = true)
+        this.preFetch.results &&
+        data.characters.info.pages !== 1 &&
+        data.characters.info.next !== 2 &&
+          (data.characters.results = [...this.preFetch.results, ...data.characters.results])
         return data.characters
       },
       skip () { // used to skip query

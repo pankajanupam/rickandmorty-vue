@@ -38,7 +38,8 @@ export default {
   },
   data: () => ({ selectedValues: [] }),
   watch: {
-    checked: function () {
+    checked: function (newVal, oldVal) {
+      // console.log('checked watcher', newVal, oldVal)
       this.selectedValues = this.checked // convert props to local/state variable to use in model
     }
   }

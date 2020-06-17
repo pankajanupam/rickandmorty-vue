@@ -1,9 +1,10 @@
 <template>
     <div class="tag-wrapper">
-        <span class="label secondary" v-for="(tag, key) in tags"
-        :key="tag+key">
+      <template v-for="(tagArray, key) in tags">
+        <span class="label secondary" v-for="tag in tagArray" :key="tag+key">
           {{tag}} <a :data-key="key" :data-value="tag" @click.prevent="removeTag">x</a>
         </span>
+      </template>
     </div>
 </template>
 
@@ -21,9 +22,9 @@ export default {
   },
   methods: {
     removeTag (event) {
-      delete this.tags[event.target.dataset.key]
-      this.tags = { ...this.tags }
-      this.$emit('tagRemoved', event.target.dataset, this.type)
+      const data = event.target.dataset
+      this.tags[data.key].splice(this.tags[data.key].indexOf(data.value), 1)
+      this.$emit('tagRemoved', data)
     }
   },
   watch: {
