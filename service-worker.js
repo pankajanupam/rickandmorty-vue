@@ -11,24 +11,24 @@
  * See https://goo.gl/2aRDsh
  */
 
-importScripts('https://storage.googleapis.com/workbox-cdn/releases/4.3.1/workbox-sw.js')
+importScripts("https://storage.googleapis.com/workbox-cdn/releases/4.3.1/workbox-sw.js");
 
 importScripts(
-  '/rickandmorty-vue/precache-manifest.d2ee1f1bdc9ff56648bf876f0ea44cd1.js'
-)
+  "/rickandmorty-vue/precache-manifest.400f165728c6132ec1836d5a624fa451.js"
+);
 
-workbox.core.setCacheNameDetails({ prefix: 'vue-traning-gy' })
+workbox.core.setCacheNameDetails({prefix: "vue-traning-gy"});
 
 self.addEventListener('message', (event) => {
   if (event.data && event.data.type === 'SKIP_WAITING') {
-    self.skipWaiting()
+    self.skipWaiting();
   }
-})
+});
 
 /**
  * The workboxSW.precacheAndRoute() method efficiently caches and responds to
  * requests for URLs in the manifest.
  * See https://goo.gl/S9QRab
  */
-self.__precacheManifest = [].concat(self.__precacheManifest || [])
-workbox.precaching.precacheAndRoute(self.__precacheManifest, {})
+self.__precacheManifest = [].concat(self.__precacheManifest || []);
+workbox.precaching.precacheAndRoute(self.__precacheManifest, {});
