@@ -58,9 +58,13 @@ export default {
     getSelectedFilter (data) {
       this.filter = { ...this.filter, ...data } // data
     },
-    switchSearchMode () {
+    switchSearchMode (locationFilter) {
       this.pageFilters.status.type = 'checkbox'
       this.pageFilters.gender.type = 'checkbox'
+      this.pageFilters.location = {
+        type: 'checkbox',
+        data: locationFilter
+      }
     }
   }
   // apollo: {

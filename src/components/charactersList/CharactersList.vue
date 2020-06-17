@@ -59,7 +59,13 @@ export default {
     },
     skipQuery: function (newVal, oldVal) {
       console.log(newVal, oldVal)
-      newVal && this.$emit('preFetchRead')
+      if (newVal) {
+        const location = {}
+        this.preFetch.results.map((character) => {
+          location[character.location.name] = true
+        })
+        this.$emit('preFetchRead', Object.keys(location))
+      }
     }
   },
   methods: {},
@@ -92,7 +98,7 @@ export default {
         }
       },
       update (data) {
-        data.characters.info.next < 3 ? (this.preFetchPage = data.characters.info.next) : (this.skipQuery = true)
+        data.characters.info.next ? (this.preFetchPage = data.characters.info.next) : (this.skipQuery = true)
         this.preFetch.results &&
         data.characters.info.pages !== 1 &&
         data.characters.info.next !== 2 &&

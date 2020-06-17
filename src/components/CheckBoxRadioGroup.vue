@@ -1,15 +1,17 @@
 <template>
   <fieldset class="fieldset">
     <legend>{{filterTitle}}</legend>
-    <div v-for="(checkbox, key ) in checkboxes" :key="key">
-        <input
-          :id="checkbox"
-          @change="callbackfn"
-          :name="filterTitle"
-          :type="type"
-          v-model="selectedValues"
-          :value="checkbox" />
-        <label :for="checkbox">{{checkbox}}</label>
+    <div class="elem-group">
+      <div v-for="(checkbox, key ) in checkboxes" :key="key">
+          <input
+            :id="checkbox"
+            @change="callbackfn"
+            :name="filterTitle"
+            :type="type"
+            v-model="selectedValues"
+            :value="checkbox" />
+          <label :for="checkbox">{{checkbox}}</label>
+      </div>
     </div>
   </fieldset>
 </template>
@@ -51,9 +53,12 @@ export default {
     margin-top: 0;
     box-shadow: inset 0px 0px 10px 0px rgba(180, 180, 180, 0.2);
     text-align: left;
-
     legend {
       text-transform: capitalize;
+    }
+    .elem-group {
+      max-height: 350px;
+      overflow: scroll;
     }
   }
 </style>
