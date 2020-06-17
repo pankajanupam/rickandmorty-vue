@@ -1,7 +1,7 @@
 <template>
   <div class="home">
-    <h1>Vuejs Traning assigment</h1>
     <div class="grid-container fluid">
+      <vue-header :showCallout="showAlert"></vue-header>
       <div class="grid-x grid-margin-x">
         <div class="cell small-12 medium-3">
           <filter-panel :filters="pageFilters" :selectedFilters="filter" :callbackfn="getSelectedFilter"></filter-panel>
@@ -25,6 +25,7 @@
 // import gql from 'graphql-tag'
 
 // @ is an alias to /src
+import VueHeader from '@/components/Header.vue'
 import FilterPanel from '@/components/FilterPanel.vue'
 import TopPanel from '@/components/TopPanel.vue'
 import CharactersList from '@/components/charactersList/CharactersList.vue'
@@ -34,6 +35,7 @@ export default {
   data () {
     return {
       filter: {},
+      showAlert: true,
       pageFilters: {
         status: {
           type: 'radio',
@@ -49,7 +51,8 @@ export default {
   components: {
     FilterPanel,
     TopPanel,
-    CharactersList
+    CharactersList,
+    VueHeader
   },
   methods: {
     getSearchTerm (data) {
@@ -65,42 +68,13 @@ export default {
         type: 'checkbox',
         data: locationFilter
       }
+      this.showAlert = false
     }
   }
-  // apollo: {
-  //   locations: {
-  //     query: gql`
-  //       query {
-  //         locations{
-  //           info {
-  //             count
-  //           }
-  //           results {
-  //             id
-  //             name
-  //           }
-  //         }
-  //       }
-  //     `,
-  //     update (data) {
-  //       // this will create location filter if skip is false
-  //       this.filters = { ...this.filters, ...{ location: data.locations.results.map(({ name }) => name) } }
-  //     },
-  //     skip () {
-  //       // this query not in use as api does not support location based filter in characters
-  //       return true
-  //     }
-  //   }
-  // }
 }
 </script>
 
 <style lang="scss" scoped>
-  h1 {
-    text-align: left;
-    margin: 20px auto 30px 20px;
-    text-transform: uppercase;
-  }
   .top-panel-container {
     margin-top: 10px;
     min-height: 100px;
