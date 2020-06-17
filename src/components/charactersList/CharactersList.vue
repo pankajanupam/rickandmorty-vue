@@ -45,17 +45,18 @@ export default {
   watch: {
     filter: function (newVal, oldVal) {
       this.page = 1
-      const characters = []
-      this.preFetch.results.every((character) => {
-        Object.keys(newVal).every((filterKey) => {
-          return (typeof newVal[filterKey] === 'string' && character[filterKey].toLowerCase().indexOf(newVal[filterKey].toLowerCase()) > -1) ||
-                  (newVal[filterKey].length === 0 || newVal[filterKey].indexOf(character[filterKey]) > -1)
-        }) && characters.push(character)
+      if (this.skipQuery) {
+        const characters = []
+        this.preFetch.results.every((character) => {
+          Object.keys(newVal).every((filterKey) => {
+            return (typeof newVal[filterKey] === 'string' && character[filterKey].toLowerCase().indexOf(newVal[filterKey].toLowerCase()) > -1) ||
+                    (newVal[filterKey].length === 0 || newVal[filterKey].indexOf(character[filterKey]) > -1)
+          }) && characters.push(character)
 
-        return characters.length < 20
-      })
-      this.characters.results = characters
-      console.log(characters)
+          return characters.length < 20
+        })
+        this.characters.results = characters
+      }
     },
     skipQuery: function (newVal, oldVal) {
       console.log(newVal, oldVal)
@@ -74,17 +75,30 @@ export default {
       query: characters,
       loadingKey: 'loading',
       variables () {
+        const filters = {}
+        Object.keys(this.filter).map((key) => {
+          this.filter[key] && this.filter[key].length && (filters[key] = this.filter[key][0])
+        })
+        console.log(this.page, filters, this.filter)
         return {
-          filter: { ...this.filter },
+          filter: filters,
           page: this.page
         }
       },
       update (data) {
-        this.characters.results &&
-        data.characters.info.pages !== 1 &&
-        data.characters.info.next !== 2 &&
-          (data.characters.results = [...this.characters.results, ...data.characters.results])
-        return data.characters
+        console.log(data, 'in update')
+        try {
+          this.characters.results &&
+          data.characters.info.pages !== 1 &&
+          data.characters.info.next !== 2 &&
+            (data.characters.results = [...this.characters.results, ...data.characters.results])
+          return data.characters
+        } catch (error) {
+          return {
+            results: [],
+            info: {}
+          }
+        }
       },
       skip () { // used to skip query
         return this.skipQuery
