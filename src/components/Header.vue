@@ -1,7 +1,7 @@
 <template>
   <div class="grid-x grid-margin-x header">
     <div class="cell small-24">
-      <h1>Vuejs Traning assigment</h1>
+      <h1>Vuejs training assignment</h1>
       <callout v-if="showCallout"></callout>
     </div>
   </div>
