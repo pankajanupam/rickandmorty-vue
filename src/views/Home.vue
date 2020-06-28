@@ -22,8 +22,9 @@
 </template>
 
 <script>
-// import gql from 'graphql-tag'
+import { mapState, mapMutations } from 'vuex'
 
+// import gql from 'graphql-tag'
 // @ is an alias to /src
 import VueHeader from '@/components/Header.vue'
 import FilterPanel from '@/components/FilterPanel.vue'
@@ -35,19 +36,10 @@ export default {
   data () {
     return {
       filter: {},
-      showAlert: true,
-      pageFilters: {
-        status: {
-          type: 'radio',
-          data: ['Alive', 'Dead', 'unknown'] // we have only 3 possiable value as refered in api doc
-        },
-        gender: {
-          type: 'radio',
-          data: ['Female', 'Male', 'Genderless', 'unknown'] // we have only four possiable value as refered in api doc
-        }
-      }
+      showAlert: true
     }
   },
+  computed: mapState({ pageFilters: 'characterPageFilters' }),
   components: {
     FilterPanel,
     TopPanel,
@@ -61,15 +53,7 @@ export default {
     getSelectedFilter (data) {
       this.filter = { ...this.filter, ...data } // data
     },
-    switchSearchMode (locationFilter) {
-      this.pageFilters.status.type = 'checkbox'
-      this.pageFilters.gender.type = 'checkbox'
-      this.pageFilters.location = {
-        type: 'checkbox',
-        data: locationFilter
-      }
-      this.showAlert = false
-    }
+    ...mapMutations(['switchSearchMode'])
   }
 }
 </script>

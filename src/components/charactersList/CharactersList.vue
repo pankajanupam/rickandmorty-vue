@@ -109,7 +109,7 @@ export default {
         }
       },
       update (data) {
-        data.characters.info.next ? (this.preFetchPage = data.characters.info.next) : (this.skipQuery = true)
+        data.characters.info.next && data.characters.info.next < 3 ? (this.preFetchPage = data.characters.info.next) : (this.skipQuery = true)
         this.preFetch.results && data.characters.info.pages !== 1 && data.characters.info.next !== 2 &&
           (data.characters.results = [...this.preFetch.results, ...data.characters.results])
         return data.characters
