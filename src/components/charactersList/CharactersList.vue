@@ -44,14 +44,16 @@ export default {
   },
   watch: {
     filter: function (newVal, oldVal) {
+      const activeFilters = { ...newVal }
+      // activeFilters.sort && ( activeFilters.sort.value === 'desc' ? this.preFetch.results.reverse() : d)
       this.page = 1
       if (this.skipQuery) {
         const characters = []
         this.preFetch.results.every((character) => {
-          Object.keys(newVal).every((filterKey) => {
-            return (typeof newVal[filterKey] === 'string' && character[filterKey].toLowerCase().indexOf(newVal[filterKey].toLowerCase()) > -1) ||
-                    (newVal[filterKey].length === 0 || newVal[filterKey].indexOf(character[filterKey].name || character[filterKey]) > -1)
-          }) && characters.push(character)
+          Object.keys(activeFilters).every((filterKey) =>
+            (typeof activeFilters[filterKey] === 'string' && character[filterKey].toLowerCase().indexOf(activeFilters[filterKey].toLowerCase()) > -1) ||
+            (activeFilters[filterKey].length === 0 || activeFilters[filterKey].indexOf(character[filterKey].name || character[filterKey]) > -1)
+          ) && characters.push(character)
 
           return characters.length < 20
         })
@@ -76,10 +78,7 @@ export default {
       loadingKey: 'loading',
       variables () {
         const filters = {}
-        Object.keys(this.filter).map((key) => {
-          this.filter[key] && this.filter[key].length && (filters[key] = this.filter[key][0])
-        })
-        console.log(this.page, filters, this.filter)
+        Object.keys(this.filter).map((key) => this.filter[key] && this.filter[key].length && (filters[key] = this.filter[key][0]))
         return {
           filter: filters,
           page: this.page
@@ -88,9 +87,7 @@ export default {
       update (data) {
         console.log(data, 'in update')
         try {
-          this.characters.results &&
-          data.characters.info.pages !== 1 &&
-          data.characters.info.next !== 2 &&
+          this.characters.results && data.characters.info.pages !== 1 && data.characters.info.next !== 2 &&
             (data.characters.results = [...this.characters.results, ...data.characters.results])
           return data.characters
         } catch (error) {
@@ -113,9 +110,7 @@ export default {
       },
       update (data) {
         data.characters.info.next ? (this.preFetchPage = data.characters.info.next) : (this.skipQuery = true)
-        this.preFetch.results &&
-        data.characters.info.pages !== 1 &&
-        data.characters.info.next !== 2 &&
+        this.preFetch.results && data.characters.info.pages !== 1 && data.characters.info.next !== 2 &&
           (data.characters.results = [...this.preFetch.results, ...data.characters.results])
         return data.characters
       },
@@ -126,7 +121,3 @@ export default {
   }
 }
 </script>
-
-<style lang="scss">
-
-</style>

@@ -1,7 +1,20 @@
 <template>
   <div>
     <tags :data="tags" @tagRemoved="refreshData"></tags>
-    <search-bar :callbackfn="searchChangeHandler"></search-bar>
+    <div class="grid-x grid-margin-x">
+      <div class="cell small-12 large-8">
+        <search-bar :callbackfn="searchChangeHandler"></search-bar>
+      </div>
+      <div class="cell small-12 large-4">
+        <label class="grid-x grid-margin-x">
+          <div class="cell small-2">Sort</div>
+          <select class="cell small-10">
+            <option value="ascending">Ascending</option>
+            <option value="descending">Descending</option>
+          </select>
+        </label>
+      </div>
+    </div>
   </div>
 </template>
 
