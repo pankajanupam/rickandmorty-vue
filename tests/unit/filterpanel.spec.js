@@ -1,7 +1,7 @@
 import { expect } from 'chai'
 import { shallowMount, mount } from '@vue/test-utils' // shallowMount,
 import FilterPanel from '@/components/FilterPanel.vue'
-import CheckBoxRadioGroup from '@/components/CheckBoxRadioGroup.vue'
+import CheckBoxRadioGroup from '@/components/base/CheckBoxRadioGroup.vue'
 import state from '@/store/state'
 
 console.log(state.characterPageFilters)

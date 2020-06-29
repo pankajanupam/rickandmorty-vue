@@ -1,10 +1,10 @@
 <template>
   <div class="card">
-    <img :src="character.image" />
+    <img :src="character.image" alt="" />
     <div class="card-divider">
       <h4>{{character.name}}</h4>
     </div>
-    <div class="card-section">
+    <div class="card-details">
       <ul>
         <li v-for="(value, key) in fieldlist" :key="value">
           <strong>{{value}}</strong>
@@ -35,7 +35,7 @@ export default {
     background: rgba(0, 0, 0, 0.7);
     color: #fff;
   }
-  &-section {
+  &-details {
     ul {
       list-style-type: none;
       margin: 0;

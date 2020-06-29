@@ -1,5 +1,5 @@
 <template>
-  <div class="grid-x grid-margin-x header">
+  <div class="grid-x grid-margin-x">
     <div class="cell small-24">
       <h1>Vuejs training assignment</h1>
       <callout v-if="showCallout"></callout>
@@ -15,7 +15,7 @@ export default {
   props: {
     showCallout: {
       type: Boolean,
-      default: true
+      default: false
     }
   },
   components: {
@@ -25,12 +25,9 @@ export default {
 </script>
 
 <style lang="scss" scoped>
- .header {
-  margin-bottom: 20px;
   h1 {
     text-align: left;
     margin: 20px auto 10px 20px;
     text-transform: uppercase;
   }
- }
 </style>
