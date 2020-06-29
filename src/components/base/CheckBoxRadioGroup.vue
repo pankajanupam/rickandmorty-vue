@@ -1,7 +1,7 @@
 <template>
-  <fieldset class="fieldset">
+  <fieldset>
     <legend>{{filterTitle}}</legend>
-    <div class="elem-group">
+    <div>
       <div v-for="(checkbox, key ) in checkboxes" :key="key">
           <input
             :id="checkbox"
@@ -49,14 +49,14 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-  .fieldset {
+  fieldset {
     margin-top: 0;
     box-shadow: inset 0px 0px 10px 0px rgba(180, 180, 180, 0.2);
     text-align: left;
     legend {
       text-transform: capitalize;
     }
-    .elem-group {
+    &>div {
       max-height: 350px;
       overflow: scroll;
     }
