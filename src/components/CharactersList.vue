@@ -19,7 +19,7 @@
 <script>
 
 // @ is an alias to /src
-import CharacterCard from '@/components/CharacterCard.vue'
+import CharacterCard from '@/components/base/CharacterCard.vue'
 import { mapActions, mapState } from 'vuex'
 // import Pagination from '@/components/Pagination.vue'
 // import { characters } from './Query.js'

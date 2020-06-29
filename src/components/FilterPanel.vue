@@ -13,7 +13,7 @@
 </template>
 
 <script>
-import CheckBoxGroup from './CheckBoxRadioGroup.vue'
+import CheckBoxGroup from './base/CheckBoxRadioGroup.vue'
 // @ is an alias to /src
 
 export default {

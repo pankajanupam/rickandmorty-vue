@@ -8,7 +8,7 @@
 </template>
 
 <script>
-import Callout from '@/components/Callout.vue'
+import Callout from '@/components/base/Callout.vue'
 
 export default {
   name: 'Header',

@@ -20,8 +20,8 @@
 
 <script>
 
-import Tags from './Tags.vue'
-import SearchBar from './SearchBar.vue'
+import Tags from './base/Tags.vue'
+import SearchBar from './base/SearchBar.vue'
 
 export default {
   props: {
