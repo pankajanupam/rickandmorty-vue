@@ -11,18 +11,18 @@ import store from './store'
 // Vue.use(VueResource)
 Vue.config.productionTip = false
 
-const apolloClient = new ApolloClient({
+export const apolloClient = new ApolloClient({
   uri: 'https://rickandmortyapi.com/graphql'
 })
 
 Vue.use(VueApollo)
 
-export const eventBus = new Vue()
+// export const eventBus = new Vue()
 
 const apolloProvider = new VueApollo({
   defaultClient: apolloClient
 })
-
+console.log('update')
 new Vue({
   router,
   store,

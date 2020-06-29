@@ -1,6 +1,6 @@
 import gql from 'graphql-tag'
 
-export const characters = gql` query ( $filter: FilterCharacter, $page: Int ) {
+export const characters = gql` query ( $page: Int, $filter: FilterCharacter ) {
     characters(page: $page, filter: $filter ) {
       info {
           count,

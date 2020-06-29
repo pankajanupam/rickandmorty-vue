@@ -1,8 +1,9 @@
 <template>
   <div class="characters-list grid-x grid-margin-x grid-margin-y">
-    <div v-for="(character, key) in characters.results" :key="key" class="cell small-6 large-3">
+    <div v-for="(character, key) in characters" :key="key" class="cell small-6 large-3">
       <character-card :character="character"></character-card>
     </div>
+    <!-- {{ fnPreFetch() }} -->
     <div class="cell small-12">
       <template v-if="loading">
         Loading...
@@ -19,8 +20,9 @@
 
 // @ is an alias to /src
 import CharacterCard from '@/components/CharacterCard.vue'
+import { mapActions, mapState } from 'vuex'
 // import Pagination from '@/components/Pagination.vue'
-import { characters } from './Query.js'
+// import { characters } from './Query.js'
 
 export default {
   props: {
@@ -33,11 +35,13 @@ export default {
   data: () => ({
     page: 1,
     loading: 0,
-    characters: {},
-    preFetch: {},
     preFetchPage: 1,
     skipQuery: false
   }),
+  created () {
+    this.fnPreFetch()
+  },
+  computed: mapState(['characters']),
   components: {
     CharacterCard
     // Pagination
@@ -59,65 +63,10 @@ export default {
         })
         this.characters.results = characters
       }
-    },
-    skipQuery: function (newVal, oldVal) {
-      console.log(newVal, oldVal)
-      if (newVal) {
-        const location = {}
-        this.preFetch.results.map((character) => {
-          location[character.location.name] = true
-        })
-        this.$emit('preFetchRead', Object.keys(location))
-      }
     }
   },
-  methods: {},
-  apollo: {
-    characters: {
-      query: characters,
-      loadingKey: 'loading',
-      variables () {
-        const filters = {}
-        Object.keys(this.filter).map((key) => this.filter[key] && this.filter[key].length && (filters[key] = this.filter[key][0]))
-        return {
-          filter: filters,
-          page: this.page
-        }
-      },
-      update (data) {
-        console.log(data, 'in update')
-        try {
-          this.characters.results && data.characters.info.pages !== 1 && data.characters.info.next !== 2 &&
-            (data.characters.results = [...this.characters.results, ...data.characters.results])
-          return data.characters
-        } catch (error) {
-          return {
-            results: [],
-            info: {}
-          }
-        }
-      },
-      skip () { // used to skip query
-        return this.skipQuery
-      }
-    },
-    preFetch: {
-      query: characters,
-      variables () {
-        return {
-          page: this.preFetchPage
-        }
-      },
-      update (data) {
-        data.characters.info.next && data.characters.info.next < 3 ? (this.preFetchPage = data.characters.info.next) : (this.skipQuery = true)
-        this.preFetch.results && data.characters.info.pages !== 1 && data.characters.info.next !== 2 &&
-          (data.characters.results = [...this.preFetch.results, ...data.characters.results])
-        return data.characters
-      },
-      skip () { // used to skip query
-        return this.skipQuery
-      }
-    }
+  methods: {
+    ...mapActions({ fnPreFetch: 'preFetch' })
   }
 }
 </script>

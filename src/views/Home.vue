@@ -35,11 +35,10 @@ export default {
   name: 'Home',
   data () {
     return {
-      filter: {},
-      showAlert: true
+      filter: {}
     }
   },
-  computed: mapState({ pageFilters: 'characterPageFilters' }),
+  computed: mapState({ pageFilters: 'characterPageFilters', showAlert: 'showAlert' }),
   components: {
     FilterPanel,
     TopPanel,
