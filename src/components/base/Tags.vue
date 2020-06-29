@@ -1,5 +1,5 @@
 <template>
-    <div class="tag-wrapper">
+    <div class="tags">
       <template v-for="(tagArray, key) in tags">
         <span class="label secondary" v-for="tag in tagArray" :key="tag+key">
           {{tag}} <a :data-key="key" :data-value="tag" @click.prevent="removeTag">x</a>
@@ -20,6 +20,9 @@ export default {
   data () {
     return { tags: {} }
   },
+  created () {
+    this.tags = this.data
+  },
   methods: {
     removeTag (event) {
       const data = event.target.dataset
@@ -36,7 +39,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-  .tag-wrapper {
+  .tags {
     text-align: left;
     .label {
       font-weight: bold;

@@ -1,5 +1,5 @@
 <template>
-  <div class="characters-list grid-x grid-margin-x grid-margin-y">
+  <div class="grid-x grid-margin-x grid-margin-y">
     <div v-for="(character, key) in charactersList" :key="key" class="cell small-6 large-3">
       <character-card :character="character"></character-card>
     </div>
