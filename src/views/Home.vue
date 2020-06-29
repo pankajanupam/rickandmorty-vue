@@ -29,7 +29,7 @@ import { mapState } from 'vuex'
 import VueHeader from '@/components/Header.vue'
 import FilterPanel from '@/components/FilterPanel.vue'
 import TopPanel from '@/components/TopPanel.vue'
-import CharactersList from '@/components/charactersList/CharactersList.vue'
+import CharactersList from '@/components/CharactersList.vue'
 
 export default {
   name: 'Home',
