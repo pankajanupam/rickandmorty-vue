@@ -18,7 +18,10 @@ import CheckBoxGroup from './CheckBoxRadioGroup.vue'
 
 export default {
   props: {
-    selectedFilters: Object,
+    selectedFilters: {
+      type: Object,
+      default: () => ({})
+    },
     callbackfn: {
       type: Function,
       required: true
