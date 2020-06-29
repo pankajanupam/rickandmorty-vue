@@ -7,6 +7,7 @@ export default {
       data: locationFilter
     }
     state.showAlert = false
+    state.skipQuery = true
   },
   setCharacters (state, characters) {
     state.characters = characters

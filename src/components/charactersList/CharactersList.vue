@@ -1,6 +1,6 @@
 <template>
   <div class="characters-list grid-x grid-margin-x grid-margin-y">
-    <div v-for="(character, key) in characters" :key="key" class="cell small-6 large-3">
+    <div v-for="(character, key) in charactersList" :key="key" class="cell small-6 large-3">
       <character-card :character="character"></character-card>
     </div>
     <!-- {{ fnPreFetch() }} -->
@@ -36,24 +36,26 @@ export default {
     page: 1,
     loading: 0,
     preFetchPage: 1,
-    skipQuery: false
+    charactersList: []
   }),
   created () {
     this.fnPreFetch()
   },
-  computed: mapState(['characters']),
+  computed: mapState(['characters', 'skipQuery']),
   components: {
     CharacterCard
     // Pagination
   },
   watch: {
+    characters: function (newVal) {
+      this.charactersList = newVal
+    },
     filter: function (newVal, oldVal) {
       const activeFilters = { ...newVal }
-      // activeFilters.sort && ( activeFilters.sort.value === 'desc' ? this.preFetch.results.reverse() : d)
       this.page = 1
       if (this.skipQuery) {
         const characters = []
-        this.preFetch.results.every((character) => {
+        this.characters.every((character) => {
           Object.keys(activeFilters).every((filterKey) =>
             (typeof activeFilters[filterKey] === 'string' && character[filterKey].toLowerCase().indexOf(activeFilters[filterKey].toLowerCase()) > -1) ||
             (activeFilters[filterKey].length === 0 || activeFilters[filterKey].indexOf(character[filterKey].name || character[filterKey]) > -1)
@@ -61,7 +63,7 @@ export default {
 
           return characters.length < 20
         })
-        this.characters.results = characters
+        this.charactersList = characters
       }
     }
   },

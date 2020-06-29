@@ -1,6 +1,7 @@
 export default {
   characters: [],
   showAlert: true,
+  skipQuery: false,
   characterPageFilters: {
     status: {
       type: 'radio',

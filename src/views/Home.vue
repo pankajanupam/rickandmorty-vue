@@ -12,7 +12,7 @@
               <top-panel :appliedfilters="filter" :callbackfn="getSearchTerm"></top-panel>
             </div>
             <div class="cell small-12">
-              <characters-list :filter="filter" @preFetchRead="switchSearchMode" :enablePreFetch="false"></characters-list>
+              <characters-list :filter="filter" :enablePreFetch="false"></characters-list>
             </div>
           </div>
         </div>
@@ -22,7 +22,7 @@
 </template>
 
 <script>
-import { mapState, mapMutations } from 'vuex'
+import { mapState } from 'vuex'
 
 // import gql from 'graphql-tag'
 // @ is an alias to /src
@@ -51,8 +51,7 @@ export default {
     },
     getSelectedFilter (data) {
       this.filter = { ...this.filter, ...data } // data
-    },
-    ...mapMutations(['switchSearchMode'])
+    }
   }
 }
 </script>

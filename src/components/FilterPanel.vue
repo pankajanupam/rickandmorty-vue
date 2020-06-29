@@ -1,5 +1,5 @@
 <template>
-  <div class="filter-panel">
+  <div class="filterpanel">
     <check-box-group
       v-for="(filter, key) in filters"
       :checkboxes="filter.data"
@@ -49,7 +49,7 @@ export default {
 </script>
 
 <style lang="scss">
-  .filter-panel {
+  .filterpanel {
     width: 100%;
   }
 </style>
