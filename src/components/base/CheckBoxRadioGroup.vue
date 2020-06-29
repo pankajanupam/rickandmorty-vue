@@ -1,5 +1,5 @@
 <template>
-  <fieldset>
+  <fieldset class="fieldset">
     <legend>{{filterTitle}}</legend>
     <div>
       <div v-for="(checkbox, key ) in checkboxes" :key="key">
@@ -56,7 +56,7 @@ export default {
     legend {
       text-transform: capitalize;
     }
-    &>div {
+    &>div{
       max-height: 350px;
       overflow: scroll;
     }

@@ -9,6 +9,7 @@ export const characters = gql` query ( $page: Int, $filter: FilterCharacter ) {
         prev
     }
     results { 
+      id
       name
       image
       status

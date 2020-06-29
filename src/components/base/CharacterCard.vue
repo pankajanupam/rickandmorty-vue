@@ -2,7 +2,6 @@
   <div class="card">
     <img :src="character.image" alt="" />
     <div class="card-divider">
-      {{character.id}}
       <h4>{{character.name}}</h4>
     </div>
     <div class="card-section">

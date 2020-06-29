@@ -6,13 +6,7 @@
         <search-bar :callbackfn="searchChangeHandler"></search-bar>
       </div>
       <div class="cell small-12 large-4">
-        <label class="grid-x grid-margin-x">
-          <div class="cell small-2">Sort</div>
-          <select class="cell small-10">
-            <option value="ascending">Ascending</option>
-            <option value="descending">Descending</option>
-          </select>
-        </label>
+        <dropdown></dropdown>
       </div>
     </div>
   </div>
@@ -22,6 +16,7 @@
 
 import Tags from './base/Tags.vue'
 import SearchBar from './base/SearchBar.vue'
+import Dropdown from './base/Dropdown.vue'
 
 export default {
   props: {
@@ -32,8 +27,9 @@ export default {
     appliedfilters: Object
   },
   components: {
-    SearchBar,
-    Tags
+    Tags,
+    Dropdown,
+    SearchBar
   },
   watch: {
     // filter applied filter and remove unwanted key from tag
