@@ -17,7 +17,12 @@
 
 <script>
 export default {
-  props: ['character'],
+  props: {
+    character: {
+      type: Object,
+      required: true
+    }
+  },
   data () {
     return {
       fieldlist: { status: 'status', species: 'species', gender: 'gender', origin: 'origin', location: 'last location' }
